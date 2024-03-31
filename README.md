@@ -1,12 +1,23 @@
 # Wrangle
 
-Static analysis tool with a powerful rule- and LLM-based engine for identifying technical debt. We operate **both** low-level (linting line-by-line) as well as high-level (architectural considerations).
+Simple yet powerful CLI tool for getting organized about technical debt.
+
+## Why was Wrangle created?
+
+Moving fast and accruing technical debt go hand in hand. We think the limiting factor isn't knowing how to fix the technical debt, it's two things:
+
+- Staging organized about it
+- Getting the time to do it and automating as much as possible
+
+This CLI tool aims to solve the first of these points. It outputs a prioritized list of technical debt that requires addressing.
+
+The second point is a planned future project, **Wrangle Managed.** More to come!
 
 ## Prerequisites
 
-Wrangle uses LLMs for a large portion of the "higher-level" analysis that we do. More providers are on the roadmap, but OpenAI is the only one for now.
+Wrangle minimizes its LLM usage, adopting a mindset that the 
 
-> **Planned:** More providers.
+Wrangle uses LLMs for a large portion of the "higher-level" analysis that we do. More providers are on the roadmap, but OpenAI is the only one for now.
 
 ## To Install
 
@@ -16,32 +27,20 @@ Installation is supported on all prominent package managers.
 - yarn: `yarn i -D @wrangle/cli`
 - pnpm: `pnpm i -D @wrangle/cli`
 
-We recommend against a global installation, as that can make it difficult for other collaborators to run the tool.
-
 ## To Run
 
-`wrangle run` is the main entrypoint. By default, anything LLM-powered is skipped, so no environment variables are necessary.
+`wrangle run` is the main entrypoint.
 
 ```shell
 wrangle run
 ```
 
-To include LLM-powered rules, supply `OPENAI_API_KEY` to the command and add the `--llm` flag.
-
-```shell
-OPENAI_API_KEY=<key> wrangle run --llm
-```
-
-> **Planned:** Wrangle will also be available at a shorter `wr` alias.
-
 ## Configuration
 
-We use a `wrangle.json` file and a published JSON Schema.
-
-> **Planned:** Support for `.js`, `.ts`, `.mjs`, `.mts`, `.cjs`, `.cts`, and as a `package.json` key.
+We use a `wrangle.json` file alongside a published JSON Schema. Configuration to come.
 
 ## License
 
 Wrangle is permissively licensed under the [Functional Source License](https://fsl.software/), following in the footsteps of [Sentry](https://open.sentry.io/licensing/). Code releases revert to the MIT License after two years.
 
-A FSL license is all-permissive with the notable exclusion that you can't turn around, throw a thin UI around it, and sell it as a code inspection service. This permits almost all developer usage while protecting the creators of the tool from the [Free-rider Problem](https://en.wikipedia.org/wiki/Free-rider_problem).
+The goal here is to enabling most usage while protecting the creators of the tool from the [Free-rider Problem](https://en.wikipedia.org/wiki/Free-rider_problem) -- in other words, someone else commercializing the tool and spinning up a managed code analysis service using it. You're meant to run this on _your_ code, not use it as a significant part of your business offerring.

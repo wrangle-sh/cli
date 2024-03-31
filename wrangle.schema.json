@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/wrangle.schema.json",
+  "title": "Wrangle",
+  "type": "object",
+  "properties": {
+    "logLevel": {
+      "description": "Which level Wrangle should log at.",
+      "type": "string",
+      "enum": ["TRACE", "DEBUG", "INFO", "WARNING", "ERROR"],
+      "default": "INFO"
+    }
+  }
+}

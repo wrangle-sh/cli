@@ -10,8 +10,6 @@ jobs:
 
       # Dependency Install
       - uses: pnpm/action-setup@v3
-        with:
-          version: 8
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
@@ -19,5 +17,7 @@ jobs:
       - run: pnpm i
 
       # Tests
-      - run: pnpm run -r lint
-      - run: pnpm run -r typecheck
+      - run: pnpm lint:depcheck
+      - run: pnpm lint:biome
+      - run: pnpm lint:typescript
+      - run: pnpm test
