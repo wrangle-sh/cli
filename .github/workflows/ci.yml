@@ -12,11 +12,12 @@ jobs:
       - uses: pnpm/action-setup@v3
       - uses: actions/setup-node@v4
         with:
-          node-version-file: package.json
+          node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm i
 
       # Tests
-      - run: pnpm lint
-      - run: pnpm typecheck
+      - run: pnpm lint:depcheck
+      - run: pnpm lint:biome
+      - run: pnpm lint:typescript
       - run: pnpm test
