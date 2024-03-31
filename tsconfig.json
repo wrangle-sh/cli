@@ -1,3 +1,18 @@
 {
-  "extends": "@tsconfig/recommended/tsconfig.json"
+  "extends": "@tsconfig/node-lts/tsconfig.json",
+  "exclude": [
+    "node_modules/**", // included by default, but as soon as you specify an `exclude` of your own, you then need to add it explicitly
+    "dist/**", // compiled output
+    "examples/**" // used only in test cases
+  ],
+  "compilerOptions": {
+    "outDir": "dist",
+    "resolveJsonModule": true,
+    "incremental": true, // allow `tsc` to persist cache to `.tsbuildinfo` for faster rebuilds
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./*"],
+      "@/*": ["./src/*"]
+    }
+  }
 }

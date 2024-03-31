@@ -1,0 +1,1 @@
+Utilities for converting from a raw `argv` array to a strongly typed version. Relies heavily on the `yargs` library.
