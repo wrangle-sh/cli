@@ -8,8 +8,17 @@ export enum LogLevelsEnum {
 }
 
 export const logger = winston.createLogger({
-  format: winston.format.colorize(),
-  transports: [new winston.transports.Console()],
+  levels: winston.config.syslog.levels,
+  format: winston.format.simple(),
+  transports: [
+    new winston.transports.Console({
+      format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.simple(),
+      ),
+      level: "debug",
+    }),
+  ],
 });
 
 export function setLogLevel(level: LogLevelsEnum) {

@@ -1,6 +1,7 @@
 import { analyze } from "@/commands/analyze.js";
 import { ExitCodesEnum } from "@/constants.js";
 import { LogLevelsEnum, logger, setLogLevel } from "@/logger.js";
+import { SeverityLevelsEnum } from "@/model.js";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { z } from "zod";
@@ -16,6 +17,12 @@ export function parseArgs() {
         choices: Object.values(LogLevelsEnum),
         default: LogLevelsEnum.WARNING,
       },
+      "minimum-severity": {
+        type: "string",
+        description: "Minimum Severity",
+        choices: Object.values(SeverityLevelsEnum),
+        default: SeverityLevelsEnum.NIT,
+      },
       files: {
         type: "array",
         description:
@@ -23,11 +30,9 @@ export function parseArgs() {
         default: [],
       },
     })
-    .middleware([
-      (yargs) => {
-        setLogLevel(yargs.logLevel);
-      },
-    ])
+    .middleware((argv) => {
+      setLogLevel(argv.logLevel);
+    })
     .command(
       "analyze",
       "runs analysis",
