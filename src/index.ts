@@ -7,8 +7,7 @@ program.name("wrangle").description("Wrangle CLI").version("1.0.0");
 
 program
   .command("run")
-  .description("Runs wrangle on the provided file.")
-  .option("--llm", "Run LLM-enabled checks.")
+  .description("Runs Wrangle on the current directory.")
   .parse(process.argv);
 
 const opts = program.opts();
