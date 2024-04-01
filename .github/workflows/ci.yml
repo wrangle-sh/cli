@@ -14,7 +14,8 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: pnpm
-      - run: pnpm i
+      - run: pnpm i --frozen-lockfile
+      - run: pnpm link . # registers `wrangle` cli command, used in tests
 
       # Tests
       - run: pnpm lint:depcheck

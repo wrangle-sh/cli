@@ -1,6 +1,8 @@
+import fs from "node:fs";
 import { analyze } from "@/commands/analyze.js";
 import { ExitCodesEnum } from "@/constants.js";
 import { LogLevelsEnum, logger, setLogLevel } from "@/logger.js";
+import { SeverityLevelsEnum } from "@/model.js";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { z } from "zod";
@@ -14,7 +16,13 @@ export function parseArgs() {
         type: "string",
         description: "Log Level",
         choices: Object.values(LogLevelsEnum),
-        default: LogLevelsEnum.WARNING,
+        default: LogLevelsEnum.INFO,
+      },
+      "minimum-severity": {
+        type: "string",
+        description: "Minimum Severity",
+        choices: Object.values(SeverityLevelsEnum),
+        default: SeverityLevelsEnum.NIT,
       },
       files: {
         type: "array",
@@ -23,11 +31,9 @@ export function parseArgs() {
         default: [],
       },
     })
-    .middleware([
-      (yargs) => {
-        setLogLevel(yargs.logLevel);
-      },
-    ])
+    .middleware((argv) => {
+      setLogLevel(argv.logLevel);
+    })
     .command(
       "analyze",
       "runs analysis",
@@ -40,6 +46,17 @@ export function parseArgs() {
             process.exit(ExitCodesEnum.HANDLED_ERROR);
           }
           process.exit(ExitCodesEnum.UNHANDLED_ERROR);
+        }
+        for (const file of files.data) {
+          try {
+            fs.readFileSync(file);
+          } catch (err: unknown) {
+            if (err instanceof Error) {
+              logger.error(`Unable to find file: ${file}.`);
+              process.exit(ExitCodesEnum.HANDLED_ERROR);
+            }
+            throw err;
+          }
         }
         analyze({ files: files.data });
       },

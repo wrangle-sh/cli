@@ -1,0 +1,1 @@
+Interfaces for mapping out from external tools to something meaningful to us. For example, taking ESLint's output and converting it to our system.

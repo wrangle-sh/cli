@@ -3,7 +3,9 @@
   "type": "module",
   "private": true,
   "version": "0.0.0",
-  "bin": "bin/wrangle.ts",
+  "bin": {
+    "wrangle": "bin/wrangle.ts"
+  },
   "engines": {
     "node": "^20.0.0",
     "pnpm": "^8.0.0"
@@ -11,7 +13,7 @@
   "packageManager": "pnpm@^8.0.0",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "start": "tsx bin/wrangle.ts analyze --files examples/hello-world.ts",
+    "start": "wrangle analyze --files examples/hello-world.ts --log-level debug",
     "lint:depcheck": "depcheck .",
     "lint:biome": "biome check .",
     "lint:typescript": "tsc --noEmit",
@@ -20,6 +22,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "chalk": "~5.3.0",
     "winston": "~3.13.0",
     "yargs": "~17.7.2",
     "zod": "~3.22.4"
@@ -27,9 +30,12 @@
   "devDependencies": {
     "@biomejs/biome": "1.6.1",
     "@tsconfig/node-lts": "~20.1.3",
+    "@types/chalk": "~2.2.0",
+    "@types/eslint": "~8.44.6",
     "@types/node": "~20.11.25",
     "@types/yargs": "~17.0.32",
     "depcheck": "~1.4.7",
+    "eslint": "~8.57.0",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
