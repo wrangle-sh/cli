@@ -5,6 +5,8 @@ import { ExitCodesEnum, ROOT_DIR } from "@/constants.js";
 import { logger } from "@/logger.js";
 import pkg from "~/package.json";
 
+const BIN_ARGS = "pnpm exec wrangle";
+
 function runWithArgs(args: string): SpawnSyncReturns<Buffer> {
   const result = spawnSync(`${BIN_ARGS} ${args}`, {
     cwd: ROOT_DIR,
@@ -26,7 +28,6 @@ function runWithArgs(args: string): SpawnSyncReturns<Buffer> {
   return result;
 }
 
-const BIN_ARGS = "pnpm exec wrangle";
 test("--version", () => {
   const result = runWithArgs("--version");
   assert(result.stdout.toString().includes(pkg.version));

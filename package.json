@@ -19,7 +19,7 @@
     "lint:typescript": "tsc --noEmit",
     "lint": "biome check . --apply && tsc --noEmit",
     "test": "node --import tsx --test **/*.test.ts",
-    "prepare": "husky"
+    "prepare": "husky && pnpm link ,"
   },
   "dependencies": {
     "chalk": "~5.3.0",
