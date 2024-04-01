@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { type SpawnSyncReturns, spawnSync } from "node:child_process";
 import { describe, test } from "node:test";
 import { ExitCodesEnum, ROOT_DIR } from "@/constants.js";
+import { logger } from "@/logger.js";
 import pkg from "~/package.json";
 
 function runWithOptions(options: string): SpawnSyncReturns<Buffer> {
@@ -9,10 +10,12 @@ function runWithOptions(options: string): SpawnSyncReturns<Buffer> {
     cwd: ROOT_DIR,
     shell: true,
   });
-  console.log(`\nTest Details (${options})`);
-  console.log(`Status: ${result.status?.toString().trim()}`);
-  console.log(`stdout: ${result.stdout?.toString().trim()}`);
-  console.log(`stderr: ${result.stderr?.toString().trim()}`);
+  if (result.status !== ExitCodesEnum.SUCCESS) {
+    logger.warning(`\nTest Details (${options})`);
+    logger.warning(`Status: ${result.status?.toString().trim()}`);
+    logger.warning(`stdout: ${result.stdout?.toString().trim()}`);
+    logger.warning(`stderr: ${result.stderr?.toString().trim()}`);
+  }
   return result;
 }
 
