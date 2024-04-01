@@ -9,7 +9,7 @@ export enum LogLevelsEnum {
 
 export const logger = winston.createLogger({
   levels: winston.config.syslog.levels,
-  format: winston.format.simple(),
+  format: winston.format.align(),
   transports: [
     new winston.transports.Console({
       format: winston.format.combine(

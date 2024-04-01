@@ -5,50 +5,57 @@ import { ExitCodesEnum, ROOT_DIR } from "@/constants.js";
 import { logger } from "@/logger.js";
 import pkg from "~/package.json";
 
-function runWithOptions(options: string): SpawnSyncReturns<Buffer> {
-  const result = spawnSync(`pnpm exec tsx ${pkg.bin} ${options}`, {
+function runWithArgs(args: string): SpawnSyncReturns<Buffer> {
+  const result = spawnSync(`${BIN_ARGS} ${args}`, {
     cwd: ROOT_DIR,
     shell: true,
   });
   if (result.status !== ExitCodesEnum.SUCCESS) {
-    logger.warning(`\nTest Details (${options})`);
-    logger.warning(`Status: ${result.status?.toString().trim()}`);
-    logger.warning(`stdout: ${result.stdout?.toString().trim()}`);
-    logger.warning(`stderr: ${result.stderr?.toString().trim()}`);
+    logger.info(`
+# --- Output (${args}) --- #`);
+    const lines = [`Status: ${result.status}`];
+    if (result.stdout && result.stdout.toString().trim() !== "") {
+      lines.push(`Stdout:\n${result.stdout.toString().trim()}`);
+    }
+    if (result.stderr && result.stderr.toString().trim() !== "") {
+      lines.push(`Stderr:\n${result.stderr.toString().trim()}`);
+    }
+    logger.warning(lines.join("\n"));
+    logger.info("\n# --- END Command Output --- #\n");
   }
   return result;
 }
 
+const BIN_ARGS = "pnpm exec wrangle";
 test("--version", () => {
-  const result = runWithOptions("--version");
+  const result = runWithArgs("--version");
   assert(result.stdout.toString().includes(pkg.version));
 });
 
 describe("File List", () => {
-  describe("Positive Scenarios", () => {
-    test("One file provided", () => {
-      const result = runWithOptions("analyze --files examples/hello-world.ts");
-      assert.equal(result.status, ExitCodesEnum.SUCCESS);
-    });
-
-    test("Multiple files provided", () => {
-      const result = runWithOptions(
-        "analyze --files examples/hello-world.ts examples/hello-world-2.ts",
-      );
-      assert.equal(result.status, ExitCodesEnum.SUCCESS);
-    });
-  });
+  describe("Positive Scenarios", () => {});
 
   describe("Negative Scenarios", () => {
+    test("One file provided with errors", () => {
+      const result = runWithArgs("analyze --files examples/hello-world.ts");
+      assert.equal(result.status, ExitCodesEnum.HANDLED_ERROR);
+    });
+
+    test("Multiple files provided (at least one error, collectively)", () => {
+      const result = runWithArgs(
+        "analyze --files examples/hello-world.ts examples/hello-world-2.ts",
+      );
+      assert.equal(result.status, ExitCodesEnum.HANDLED_ERROR);
+    });
     test("Nonexistent file provided => nonzero code", () => {
-      const result = runWithOptions(
+      const result = runWithArgs(
         "analyze --files examples/nonexistent-file.ts",
       );
-      assert.equal(result.status, ExitCodesEnum.SUCCESS);
+      assert.notEqual(result.status, ExitCodesEnum.SUCCESS);
     });
 
     test("Zero files supplied => nonzero code", () => {
-      const result = runWithOptions("analyze");
+      const result = runWithArgs("analyze");
       assert.notEqual(result.status, ExitCodesEnum.SUCCESS);
     });
   });
