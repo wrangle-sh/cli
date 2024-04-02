@@ -4,3 +4,10 @@ comment:
   require_changes: false  # if true: only post the comment if coverage changes
 github_checks:
   annotations: true
+coverage:
+  status:
+    project:
+      default:
+        target: auto
+        threshold: 0%
+        base: auto
