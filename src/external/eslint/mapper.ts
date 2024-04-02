@@ -1,5 +1,5 @@
 import type { IntegrationMapper } from "@/external/base.js";
-import { eslintRecommended } from "@/external/eslint/data/eslint-recommended.js";
+import { ESLINT_RULES } from "@/external/eslint/data/eslint-recommended.js";
 import {
   type RuleInstance,
   RuleSourcesEnum,
@@ -55,9 +55,14 @@ export class ESLintIntegrationMapper implements IntegrationMapper {
    * Given an ESLint rule identifier, return what severity it should be in our system. Relies primarily on a heuristic of which ESLint "presets" a given ESLint rule is in.
    */
   private getSeverity(identifier: string): SeverityLevelsEnum {
-    if (Object.keys(eslintRecommended).includes(identifier)) {
-      return SeverityLevelsEnum.MAJOR;
+    const found = ESLINT_RULES.types.problem.find(
+      (elem) => identifier === elem.name,
+    );
+    if (found) {
+      return found.recommended
+        ? SeverityLevelsEnum.MAJOR
+        : SeverityLevelsEnum.MINOR;
     }
-    return SeverityLevelsEnum.MINOR;
+    return SeverityLevelsEnum.NIT;
   }
 }

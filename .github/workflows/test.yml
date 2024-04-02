@@ -21,4 +21,10 @@ jobs:
       - run: pnpm lint:depcheck
       - run: pnpm lint:biome
       - run: pnpm lint:typescript
-      - run: pnpm test
+      - run: pnpm test:coverage
+      - uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: wrangle-sh/cli
+
+

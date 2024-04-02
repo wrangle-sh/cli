@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import { resolveFilesAndDirectoriesToFiles } from "@/argparse/utils.js";
 import { analyze } from "@/commands/analyze.js";
 import { ExitCodesEnum } from "@/constants.js";
 import { LogLevelsEnum, logger, setLogLevel } from "@/logger.js";
@@ -26,8 +27,7 @@ export function parseArgs() {
       },
       files: {
         type: "array",
-        description:
-          "List of files to analyze. Mandatory if running `analyze` command.",
+        description: "List of files to analyze.",
         default: [],
       },
     })
@@ -35,30 +35,23 @@ export function parseArgs() {
       setLogLevel(argv.logLevel);
     })
     .command(
-      "analyze",
+      "analyze [files..]",
       "runs analysis",
-      () => {},
+      (yargs) => {
+        yargs.positional("files", {
+          type: "string",
+          description: "List of files to analyze",
+        });
+      },
       (argv) => {
-        const files = z.array(z.string()).min(1).safeParse(argv.files);
-        if (!files.success) {
-          if (files.error.errors.find((err) => err.code === "too_small")) {
-            logger.error("At least one file must be provided.");
-            process.exit(ExitCodesEnum.HANDLED_ERROR);
-          }
-          process.exit(ExitCodesEnum.UNHANDLED_ERROR);
+        if (argv.files.length === 0) {
+          logger.error("No files provided.");
+          process.exit(ExitCodesEnum.HANDLED_ERROR);
         }
-        for (const file of files.data) {
-          try {
-            fs.readFileSync(file);
-          } catch (err: unknown) {
-            if (err instanceof Error) {
-              logger.error(`Unable to find file: ${file}.`);
-              process.exit(ExitCodesEnum.HANDLED_ERROR);
-            }
-            throw err;
-          }
-        }
-        analyze({ files: files.data });
+        const files = resolveFilesAndDirectoriesToFiles(
+          z.array(z.string()).parse(argv.files),
+        );
+        analyze({ files });
       },
     )
     .strict()

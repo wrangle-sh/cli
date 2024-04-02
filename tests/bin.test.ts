@@ -8,24 +8,10 @@ import pkg from "~/package.json";
 const BIN_ARGS = "pnpm exec wrangle";
 
 function runWithArgs(args: string): SpawnSyncReturns<Buffer> {
-  const result = spawnSync(`${BIN_ARGS} ${args}`, {
+  return spawnSync(`${BIN_ARGS} ${args}`, {
     cwd: ROOT_DIR,
     shell: true,
   });
-  if (result.status !== ExitCodesEnum.SUCCESS) {
-    logger.info(`
-# --- Output (${args}) --- #`);
-    const lines = [`Status: ${result.status}`];
-    if (result.stdout && result.stdout.toString().trim() !== "") {
-      lines.push(`Stdout:\n${result.stdout.toString().trim()}`);
-    }
-    if (result.stderr && result.stderr.toString().trim() !== "") {
-      lines.push(`Stderr:\n${result.stderr.toString().trim()}`);
-    }
-    logger.warning(lines.join("\n"));
-    logger.info("\n# --- END Command Output --- #\n");
-  }
-  return result;
 }
 
 test("--version", () => {
