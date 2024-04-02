@@ -8,3 +8,6 @@ dist/
 # Editor Config
 .vscode/
 .idea/
+
+# Transient Files
+lcov.info
