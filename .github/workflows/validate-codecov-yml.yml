@@ -1,0 +1,14 @@
+name: Validate codecov.yml
+
+on:
+  pull_request:
+    files:
+      - .github/workflows/codecov-yml-validator.yml
+      - codecov.yml
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: curl -X POST --fail-with-body --data-binary @codecov.yml https://codecov.io/validate
