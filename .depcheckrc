@@ -1,1 +1,1 @@
-ignores: ["~", "prettier"]
+ignores: ["~", "prettier", "tsx"]
