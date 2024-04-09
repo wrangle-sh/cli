@@ -8,12 +8,18 @@ importers:
 
   .:
     dependencies:
+      '@biomejs/biome':
+        specifier: 1.6.1
+        version: 1.6.1
       chalk:
         specifier: ~5.3.0
         version: 5.3.0
       eslint:
         specifier: ~8.57.0
         version: 8.57.0
+      marked:
+        specifier: ~12.0.1
+        version: 12.0.1
       winston:
         specifier: ~3.13.0
         version: 3.13.0
@@ -24,9 +30,6 @@ importers:
         specifier: ~3.22.4
         version: 3.22.4
     devDependencies:
-      '@biomejs/biome':
-        specifier: 1.6.1
-        version: 1.6.1
       '@tsconfig/node-lts':
         specifier: ~20.1.3
         version: 20.1.3
@@ -142,7 +145,6 @@ packages:
       '@biomejs/cli-linux-x64-musl': 1.6.1
       '@biomejs/cli-win32-arm64': 1.6.1
       '@biomejs/cli-win32-x64': 1.6.1
-    dev: true
 
   /@biomejs/cli-darwin-arm64@1.6.1:
     resolution: {integrity: sha512-KlvY00iB9T/vFi4m/GXxEyYkYnYy6aw06uapzUIIdiMMj7I/pmZu7CsZlzWdekVD0j+SsQbxdZMsb0wPhnRSsg==}
@@ -150,7 +152,6 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@biomejs/cli-darwin-x64@1.6.1:
@@ -159,7 +160,6 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@biomejs/cli-linux-arm64-musl@1.6.1:
@@ -168,7 +168,6 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@biomejs/cli-linux-arm64@1.6.1:
@@ -177,7 +176,6 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@biomejs/cli-linux-x64-musl@1.6.1:
@@ -186,7 +184,6 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@biomejs/cli-linux-x64@1.6.1:
@@ -195,7 +192,6 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@biomejs/cli-win32-arm64@1.6.1:
@@ -204,7 +200,6 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@biomejs/cli-win32-x64@1.6.1:
@@ -213,7 +208,6 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@colors/colors@1.6.0:
@@ -2105,6 +2099,12 @@ packages:
     dependencies:
       semver: 7.6.0
     dev: true
+
+  /marked@12.0.1:
+    resolution: {integrity: sha512-Y1/V2yafOcOdWQCX0XpAKXzDakPOpn6U0YLxTJs3cww6VxOzZV1BTOOYWLvH3gX38cq+iLwljHHTnMtlDfg01Q==}
+    engines: {node: '>= 18'}
+    hasBin: true
+    dev: false
 
   /merge-stream@2.0.0:
     resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==}
