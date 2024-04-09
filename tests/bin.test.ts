@@ -1,8 +1,6 @@
-import assert from "node:assert/strict";
 import { type SpawnSyncReturns, spawnSync } from "node:child_process";
-import { describe, test } from "node:test";
 import { ExitCodesEnum, ROOT_DIR } from "@/constants.js";
-import { logger } from "@/logger.js";
+import { assert, describe, test } from "vitest";
 import pkg from "~/package.json";
 
 const BIN_ARGS = "pnpm exec wrangle";

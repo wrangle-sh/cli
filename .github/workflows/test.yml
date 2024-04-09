@@ -18,7 +18,7 @@ jobs:
       - run: pnpm link . # registers `wrangle` cli command, used in tests
 
       # Tests
-      - run: pnpm lint:depcheck
+      - run: pnpm format:check
       - run: pnpm lint:biome
       - run: pnpm lint:typescript
       - run: pnpm test:coverage
