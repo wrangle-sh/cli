@@ -18,8 +18,8 @@
     "lint:biome": "biome check .",
     "lint:typescript": "tsc --noEmit",
     "lint": "biome check . --apply && tsc --noEmit",
-    "test": "node --import tsx --test **/*.test.ts",
-    "test:coverage": "node --import tsx --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=lcov.info **/*.test.ts",
+    "test": "vitest run",
+    "test:coverage": "pnpm test -- --coverage",
     "prepare": "husky"
   },
   "dependencies": {
@@ -41,7 +41,10 @@
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
     "tsx": "~4.7.1",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.2",
+    "vite": "~4.4.9",
+    "vite-tsconfig-paths": "~4.3.2",
+    "vitest": "~1.4.0"
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [

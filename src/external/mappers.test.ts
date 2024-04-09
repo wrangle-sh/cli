@@ -1,6 +1,5 @@
-import assert from "node:assert";
-import { describe, test } from "node:test";
 import { Mappers } from "@/external/base.js";
+import { assert, describe, test } from "vitest";
 
 describe("Mapper extensions start with `.`", () => {
   for (const mapper of Mappers) {
