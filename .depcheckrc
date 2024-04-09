@@ -1,1 +1,1 @@
-ignores: ["~", "prettier", "tsx"]
+ignores: ["~", "prettier", "tsx", "@vitest/coverage-v8"]
