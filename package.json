@@ -14,6 +14,8 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "start": "wrangle analyze --files examples/hello-world.ts --log-level debug",
+    "format": "prettier ./**/*.ts --write",
+    "format:check": "prettier ./**/*.ts --check",
     "lint:depcheck": "depcheck .",
     "lint:biome": "biome check .",
     "lint:typescript": "tsc --noEmit",
@@ -47,7 +49,7 @@
     "vitest": "~1.4.0"
   },
   "lint-staged": {
-    "**/*.{ts,tsx}": [
+    "**/*.ts": [
       "biome check --apply",
       "prettier --write"
     ]
