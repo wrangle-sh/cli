@@ -1,3 +1,4 @@
+import { execSync } from "node:child_process";
 import type { IntegrationMapper } from "@/external/base.js";
 import {
   type RuleInstance,
@@ -5,7 +6,6 @@ import {
   SeverityLevelsEnum,
 } from "@/model.js";
 import { coerceToRuleSlug } from "@/utils.js";
-import { execSync } from "node:child_process";
 
 export class BiomeIntegrationMapper implements IntegrationMapper {
   supportedExtensions: string[] = [
@@ -22,9 +22,7 @@ export class BiomeIntegrationMapper implements IntegrationMapper {
   ];
 
   async analyze(filepath: string): Promise<RuleInstance[]> {
-    const cliResult = execSync(
-      `biome lint ${filepath} --colors=off --log-kind=json --diagnostic-level=warn`,
-    ).toString();
+    const cliResult = execSync(`biome lint ${filepath}`).toString();
     const instance = new eslint.Biome({
       useEslintrc: false,
       overrideConfig: {

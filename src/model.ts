@@ -35,6 +35,7 @@ export type RuleIdentifier = {
  */
 export type Rule = {
   identifier: RuleIdentifier;
+  referenceUrl?: string; // A URL that the user can follow for more context. Not guaranteed to exist, particularly for some custom rules that are planned down the road.
   severity: SeverityLevelsEnum;
   message: string;
 };
