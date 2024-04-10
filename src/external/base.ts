@@ -1,8 +1,9 @@
+import { BiomeIntegrationMapper } from "@/external/biome/mapper.js";
 import { ESLintIntegrationMapper } from "@/external/eslint/mapper.js";
 /**
  * Base standardization layer that provides a common interface for all external libraries. Goal is to minimize the surface area of our mapping layer from Integration -> Wrangle.
  */
-import type { RuleInstance } from "@/model.js";
+import type { RuleViolation } from "@/model.js";
 
 export abstract class IntegrationMapper {
   /**
@@ -15,7 +16,10 @@ export abstract class IntegrationMapper {
    *
    * Not all integrations will require an async loop, but we keep the interface itself async so that we can support those that do. Worst that happens is just a promise that resolves immediately.
    */
-  abstract analyze(filepath: string): Promise<RuleInstance[]>;
+  abstract analyze(filepath: string): Promise<RuleViolation[]>;
 }
 
-export const Mappers: IntegrationMapper[] = [new ESLintIntegrationMapper()];
+export const Mappers: IntegrationMapper[] = [
+  new ESLintIntegrationMapper(),
+  new BiomeIntegrationMapper(),
+];

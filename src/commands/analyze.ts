@@ -1,11 +1,11 @@
 import path from "node:path";
 import { ExitCodesEnum } from "@/constants.js";
 import { Mappers } from "@/external/base.js";
-import { logger } from "@/logger.js";
-import { type RuleInstance, SeverityLevelsEnum } from "@/model.js";
+import { logger } from "@/loggers/program.js";
+import { type RuleViolation, SeverityLevelsEnum } from "@/model.js";
 import chalk from "chalk";
 
-async function handleFile(file: string): Promise<RuleInstance[]> {
+async function handleFile(file: string): Promise<RuleViolation[]> {
   const ext = path.extname(file);
   logger.debug(`Analyzing file ${file} with extension ${ext}`);
   const applicableMappers = Mappers.filter((mapper) =>
