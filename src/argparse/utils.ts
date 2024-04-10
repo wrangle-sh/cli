@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import { ExitCodesEnum } from "@/constants.js";
-import { logger } from "@/logger.js";
+
+import { logger } from "@/loggers/program.js";
 
 /**
  * Recursively resolves a file or directory to a list of files.

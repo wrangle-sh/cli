@@ -1,11 +1,13 @@
 import { execSync } from "node:child_process";
 import type { IntegrationMapper } from "@/external/base.js";
 import {
-  type RuleInstance,
   RuleSourcesEnum,
+  type RuleViolation,
   SeverityLevelsEnum,
 } from "@/model.js";
 import { coerceToRuleSlug } from "@/utils.js";
+
+import { logger } from "@/loggers/program.js";
 
 export class BiomeIntegrationMapper implements IntegrationMapper {
   supportedExtensions: string[] = [
@@ -21,36 +23,37 @@ export class BiomeIntegrationMapper implements IntegrationMapper {
     ".jsonc",
   ];
 
-  async analyze(filepath: string): Promise<RuleInstance[]> {
+  async analyze(filepath: string): Promise<RuleViolation[]> {
     const cliResult = execSync(`biome lint ${filepath}`).toString();
-    const instance = new eslint.Biome({
-      useEslintrc: false,
-      overrideConfig: {
-        extends: ["eslint:all"],
-      },
-    });
-    const results = await instance.lintFiles([filepath]);
-    return results
-      .flatMap((result) => result.messages)
-      .filter((message) => message.ruleId !== undefined)
-      .map((message) => {
-        const ruleId = message.ruleId as string;
-        return {
-          rule: {
-            message: message.message,
-            severity: this.getSeverity(ruleId),
-            identifier: {
-              source: RuleSourcesEnum.ESLINT,
-              slug: coerceToRuleSlug(message.message),
-            },
-          },
-          location: {
-            file: filepath,
-            line: message.line,
-            column: message.column,
-          },
-        } satisfies RuleInstance;
-      });
+    logger.info(cliResult);
+    // const instance = new eslint.Biome({
+    //   useEslintrc: false,
+    //   overrideConfig: {
+    //     extends: ["eslint:all"],
+    //   },
+    // });
+    // const results = await instance.lintFiles([filepath]);
+    // return results
+    //   .flatMap((result) => result.messages)
+    //   .filter((message) => message.ruleId !== undefined)
+    //   .map((message) => {
+    //     const ruleId = message.ruleId as string;
+    //     return {
+    //       rule: {
+    //         message: message.message,
+    //         severity: this.getSeverity(ruleId),
+    //         identifier: {
+    //           source: RuleSourcesEnum.ESLINT,
+    //           slug: coerceToRuleSlug(message.message),
+    //         },
+    //       },
+    //       location: {
+    //         file: filepath,
+    //         line: message.line,
+    //         column: message.column,
+    //       },
+    //     } satisfies RuleViolation;
+    //   });
   }
 
   /**

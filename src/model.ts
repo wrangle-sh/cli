@@ -27,7 +27,7 @@ export enum SeverityLevelsEnum {
  */
 export type RuleIdentifier = {
   source: RuleSourcesEnum;
-  slug: string; // An identifying slug that must be unique within other rules of the same source
+  slug: string; // An identifier that must be unique within other rules of the same source
 };
 
 /**
@@ -35,16 +35,16 @@ export type RuleIdentifier = {
  */
 export type Rule = {
   identifier: RuleIdentifier;
-  referenceUrl?: string; // A URL that the user can follow for more context. Not guaranteed to exist, particularly for some custom rules that are planned down the road.
   severity: SeverityLevelsEnum;
   message: string;
+  referenceUrl?: string; // A URL that the user can follow for more context. Not guaranteed to exist, particularly for some custom rules that are planned down the road.
 };
 
 /**
  * Represents a single instance where the user's code has violated a rule.
  * Is essentially a pointer, and does not include any of the actual code.
  */
-export type RuleInstance = {
+export type RuleViolation = {
   rule: Rule;
   location: {
     file: string;

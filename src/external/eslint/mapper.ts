@@ -1,8 +1,8 @@
 import type { IntegrationMapper } from "@/external/base.js";
 import { ESLINT_RULES } from "@/external/eslint/data/eslint-recommended.js";
 import {
-  type RuleInstance,
   RuleSourcesEnum,
+  type RuleViolation,
   SeverityLevelsEnum,
 } from "@/model.js";
 import { coerceToRuleSlug } from "@/utils.js";
@@ -20,7 +20,7 @@ export class ESLintIntegrationMapper implements IntegrationMapper {
     ".tsx",
   ];
 
-  async analyze(filepath: string): Promise<RuleInstance[]> {
+  async analyze(filepath: string): Promise<RuleViolation[]> {
     const instance = new eslint.ESLint({
       useEslintrc: false,
       overrideConfig: {
@@ -47,7 +47,7 @@ export class ESLintIntegrationMapper implements IntegrationMapper {
             line: message.line,
             column: message.column,
           },
-        } satisfies RuleInstance;
+        } satisfies RuleViolation;
       });
   }
 
